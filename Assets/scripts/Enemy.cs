@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public List<GameObject> bullets;
     public List<Laser> lasers;
     public float range;
+    public float health;
     private bool _shoot=true;
     public List<GameObject> _front;
     public List<GameObject> _right;
@@ -121,6 +122,11 @@ public class Enemy : MonoBehaviour
         }
         _shoot = false;
         StartCoroutine(ShootTimer());
+    }
+
+    public void GetDamaged(float damage)
+    {
+        health -= damage;
     }
     void Update()
     {
