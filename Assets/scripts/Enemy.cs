@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -50,8 +48,8 @@ public class Enemy : MonoBehaviour
         }
         return RayDir.Right;
     }
-    //selects the direction to shoot bullets at
-    private List<GameObject> SelectShootTargets()
+    //counts enemies in each region and updates _left _right _front and _bottom
+    private void CountRegion()
     {
         _front.Clear();
         _right.Clear();
@@ -93,7 +91,11 @@ public class Enemy : MonoBehaviour
             }
             //Debug.DrawLine(transform.position,transform.position + range*direction,Color.red,1);   
         }
-
+    }
+    //selects the most crowded direction as the direction to shoot
+    private List<GameObject> SelectShootTargets()
+    {
+        CountRegion();
         if (_front.Count >= _right.Count && _front.Count >= _left.Count && _front.Count >= _bottom.Count)
             return _front;
         if (_right.Count >= _front.Count && _right.Count >= _left.Count && _right.Count >= _bottom.Count)
@@ -112,9 +114,10 @@ public class Enemy : MonoBehaviour
         if (enemies == null || enemies.Count == 0) return;
         foreach (var b in bullets)
         {
-            var g = Instantiate(b, transform.position, quaternion.identity);
             var enemy = enemies[Random.Range(0, enemies.Count)];
-            g.GetComponent<Bullet>().SetTarget(enemy.transform.position - transform.position);
+            var dir = Vector3.Normalize(enemy.transform.position - transform.position);
+            var g = Instantiate(b, transform.position + dir, quaternion.identity);
+            g.GetComponent<Bullet>().SetTarget(dir);
         }
         _shoot = false;
         StartCoroutine(ShootTimer());

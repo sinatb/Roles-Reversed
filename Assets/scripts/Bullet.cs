@@ -13,7 +13,8 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        col.gameObject.GetComponent<Troop>().RecieveDamage(damage);
+        if (col.gameObject.CompareTag("Enemy"))
+            col.gameObject.GetComponent<Troop>().RecieveDamage(damage);
         Destroy(gameObject);
     }
 
