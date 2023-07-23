@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -102,19 +104,17 @@ public class Enemy : MonoBehaviour
             return _bottom;
         return null;
     }
-    private GameObject Target()
-    {
-        GameObject g = new GameObject();
-        return g;
-    }
     //Shooting Behaviour
     private void Shoot()
     {
         if (!_shoot) return;
-        SelectShootTargets();
+        var enemies = SelectShootTargets();
+        if (enemies == null || enemies.Count == 0) return;
         foreach (var b in bullets)
         {
-            Instantiate(b, transform.position, quaternion.identity);
+            var g = Instantiate(b, transform.position, quaternion.identity);
+            var enemy = enemies[Random.Range(0, enemies.Count)];
+            g.GetComponent<Bullet>().SetTarget(enemy.transform.position - transform.position);
         }
         _shoot = false;
         StartCoroutine(ShootTimer());
