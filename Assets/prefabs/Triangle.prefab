@@ -101,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 0.5
   _health: 30
+  attackTime: 1
+  damage: 10
 --- !u!60 &3951841885979893250
 PolygonCollider2D:
   m_ObjectHideFlags: 0

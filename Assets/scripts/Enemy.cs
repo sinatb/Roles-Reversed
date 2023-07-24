@@ -12,10 +12,10 @@ public class Enemy : MonoBehaviour
     public float range;
     public float health;
     private bool _shoot=true;
-    public List<GameObject> _front;
-    public List<GameObject> _right;
-    public List<GameObject> _bottom;
-    public List<GameObject> _left;
+    private List<GameObject> _front;
+    private List<GameObject> _right;
+    private List<GameObject> _bottom;
+    private List<GameObject> _left;
 
     private void Awake()
     {
@@ -24,7 +24,6 @@ public class Enemy : MonoBehaviour
         _right = new List<GameObject>();
         _left = new List<GameObject>();
     }
-
     //A simple timer to Determine the shooting time of enemy
     IEnumerator ShootTimer()
     {
@@ -107,6 +106,7 @@ public class Enemy : MonoBehaviour
             return _bottom;
         return null;
     }
+    //selects the direction for the circle to move. at the moment,The Direction is the least 
     //Shooting Behaviour
     private void Shoot()
     {
@@ -123,7 +123,10 @@ public class Enemy : MonoBehaviour
         _shoot = false;
         StartCoroutine(ShootTimer());
     }
-
+    private void Move()
+    {
+        
+    }
     public void GetDamaged(float damage)
     {
         health -= damage;
@@ -131,5 +134,6 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Shoot();
+        Move();
     }
 }
