@@ -136,6 +136,12 @@ public class Enemy : MonoBehaviour
         transform.Translate(newDir*(speed*Time.deltaTime));
     }
 
+    public void MoveToZero(float v)
+    {
+        var dir = Vector3.zero - transform.position;
+        if (dir.magnitude > 0.01f)
+            transform.Translate(dir*(v*Time.deltaTime));
+    }
     public bool GetIsAlive()
     {
         return _isAlive;
@@ -152,6 +158,8 @@ public class Enemy : MonoBehaviour
     {
         if (_isAlive)
         {
+            //IMPORTANT
+            //count region should always be called before shoot and move!
             CountRegion();
             Shoot();
             Move();
