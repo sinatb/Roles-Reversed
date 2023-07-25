@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     private Vector2 _previousDirection;
     private void Awake()
     {
+        _previousDirection = Vector2.left;
         _front = new List<GameObject>();
         _bottom = new List<GameObject>();
         _right = new List<GameObject>();
@@ -109,18 +110,16 @@ public class Enemy : MonoBehaviour
     //selects the direction for the circle to move. at the moment,The Direction is the least crowded direction
     private Vector2 SelectMoveDirection()
     {
-        if (_previousDirection == Vector2.zero)
+        Debug.Log(_previousDirection);
+        if (Physics2D.Raycast(transform.position, _previousDirection, range, 1<<3))
         {
             List<Vector2> potentialDirections = new List<Vector2>();
             for (int i = 0; i < 360; i++)
             {
-                //select the group which this ray corresponds to
-                RayDir currRayGroup = RegionSelect(i);
-                //the physical stuff for casting a ray happens here
                 Quaternion q = Quaternion.AngleAxis(i, Vector3.forward);
                 var direction = Vector3.up;
                 direction = q * direction;
-                if (Physics2D.Raycast(transform.position, direction, range, 1))
+                if (!Physics2D.Raycast(transform.position, direction, range, 1<<3))
                 {
                     potentialDirections.Add(direction);
                 }
