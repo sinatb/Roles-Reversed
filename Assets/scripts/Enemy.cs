@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -6,20 +7,19 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float _shootTime;
+    public float shootTime;
     public List<GameObject> bullets;
     public float range;
     public float health;
     public float speed;
+    private bool _isAlive = true;
     private bool _shoot=true;
     private List<GameObject> _front;
     private List<GameObject> _right;
     private List<GameObject> _bottom;
     private List<GameObject> _left;
-    private Vector2 _previousDirection;
     private void Awake()
     {
-        _previousDirection = Vector2.left;
         _front = new List<GameObject>();
         _bottom = new List<GameObject>();
         _right = new List<GameObject>();
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
     IEnumerator ShootTimer()
     {
         
-        yield return new WaitForSeconds(_shootTime);
+        yield return new WaitForSeconds(shootTime);
         _shoot = true;
     }
     //given an angle i in degrees returns the region of the angle
@@ -96,7 +96,6 @@ public class Enemy : MonoBehaviour
     //selects the most crowded direction as the direction to shoot
     private List<GameObject> SelectShootTargets()
     {
-        CountRegion();
         if (_front.Count >= _right.Count && _front.Count >= _left.Count && _front.Count >= _bottom.Count)
             return _front;
         if (_right.Count >= _front.Count && _right.Count >= _left.Count && _right.Count >= _bottom.Count)
@@ -110,26 +109,11 @@ public class Enemy : MonoBehaviour
     //selects the direction for the circle to move. at the moment,The Direction is the least crowded direction
     private Vector2 SelectMoveDirection()
     {
-        Debug.Log(_previousDirection);
-        if (Physics2D.Raycast(transform.position, _previousDirection, range, 1<<3))
-        {
-            List<Vector2> potentialDirections = new List<Vector2>();
-            for (int i = 0; i < 360; i++)
-            {
-                Quaternion q = Quaternion.AngleAxis(i, Vector3.forward);
-                var direction = Vector3.up;
-                direction = q * direction;
-                if (!Physics2D.Raycast(transform.position, direction, range, 1<<3))
-                {
-                    potentialDirections.Add(direction);
-                }
-            }
-            _previousDirection = potentialDirections[Random.Range(0, potentialDirections.Count)];
-            return _previousDirection;
-        }
-        return _previousDirection;
+        Vector2 ret;
+        ret.y = _bottom.Count - _front.Count;
+        ret.x = _left.Count - _right.Count;
+        return Vector3.Normalize(ret);
     }
-
     //Shooting Behaviour
     private void Shoot()
     {
@@ -151,13 +135,26 @@ public class Enemy : MonoBehaviour
         var newDir = SelectMoveDirection();
         transform.Translate(newDir*(speed*Time.deltaTime));
     }
+
+    public bool GetIsAlive()
+    {
+        return _isAlive;
+    }
     public void GetDamaged(float damage)
     {
         health -= damage;
+        if (health <= 0)
+        {
+            _isAlive = false;
+        }
     }
     void Update()
     {
-        Shoot();
-        Move();
+        if (_isAlive)
+        {
+            CountRegion();
+            Shoot();
+            Move();
+        }
     }
 }
