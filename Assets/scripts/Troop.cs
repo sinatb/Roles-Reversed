@@ -8,19 +8,12 @@ public abstract class Troop : MonoBehaviour
     [SerializeField] protected float attackTime;
     [SerializeField] protected float damage;
     private bool canAttack = true;
-    public abstract void Move();
+    protected abstract void Move();
     IEnumerator AttackTimer()
     {
         yield return new WaitForSeconds(attackTime);
         canAttack = true;
     }
-
-    
-    public void Awake()
-    {
-        target = GameObject.FindWithTag("Player");
-    }
-
     private void OnCollisionStay2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Player"))
@@ -40,6 +33,7 @@ public abstract class Troop : MonoBehaviour
     }
     private void Update()
     {
+        target = GameObject.FindWithTag("Player");
         if (_health <= 0)
             Destroy(gameObject);
         Move();

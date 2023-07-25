@@ -8,15 +8,15 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _shootTime;
     public List<GameObject> bullets;
-    public List<Laser> lasers;
     public float range;
     public float health;
+    public float speed;
     private bool _shoot=true;
     private List<GameObject> _front;
     private List<GameObject> _right;
     private List<GameObject> _bottom;
     private List<GameObject> _left;
-
+    private Vector2 _previousDirection;
     private void Awake()
     {
         _front = new List<GameObject>();
@@ -106,7 +106,31 @@ public class Enemy : MonoBehaviour
             return _bottom;
         return null;
     }
-    //selects the direction for the circle to move. at the moment,The Direction is the least 
+    //selects the direction for the circle to move. at the moment,The Direction is the least crowded direction
+    private Vector2 SelectMoveDirection()
+    {
+        if (_previousDirection == Vector2.zero)
+        {
+            List<Vector2> potentialDirections = new List<Vector2>();
+            for (int i = 0; i < 360; i++)
+            {
+                //select the group which this ray corresponds to
+                RayDir currRayGroup = RegionSelect(i);
+                //the physical stuff for casting a ray happens here
+                Quaternion q = Quaternion.AngleAxis(i, Vector3.forward);
+                var direction = Vector3.up;
+                direction = q * direction;
+                if (Physics2D.Raycast(transform.position, direction, range, 1))
+                {
+                    potentialDirections.Add(direction);
+                }
+            }
+            _previousDirection = potentialDirections[Random.Range(0, potentialDirections.Count)];
+            return _previousDirection;
+        }
+        return _previousDirection;
+    }
+
     //Shooting Behaviour
     private void Shoot()
     {
@@ -125,7 +149,8 @@ public class Enemy : MonoBehaviour
     }
     private void Move()
     {
-        
+        var newDir = SelectMoveDirection();
+        transform.Translate(newDir*(speed*Time.deltaTime));
     }
     public void GetDamaged(float damage)
     {

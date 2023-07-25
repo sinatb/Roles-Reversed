@@ -130,17 +130,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9122600528246207242, guid: 9e1d58220f6fbc0419e3694a1bf297b9, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5009192461770831009, guid: 9e1d58220f6fbc0419e3694a1bf297b9, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5009192461770831009, guid: 9e1d58220f6fbc0419e3694a1bf297b9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.6628733
+      value: -3.67
       objectReference: {fileID: 0}
     - target: {fileID: 5009192461770831009, guid: 9e1d58220f6fbc0419e3694a1bf297b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.010815
+      value: 2.37
       objectReference: {fileID: 0}
     - target: {fileID: 5009192461770831009, guid: 9e1d58220f6fbc0419e3694a1bf297b9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -406,6 +410,7 @@ MonoBehaviour:
   lasers: []
   range: 5
   health: 100
+  speed: 0.5
 --- !u!212 &1171167642
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -494,7 +499,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 3
+  m_Constraints: 7
 --- !u!1 &1386134603
 GameObject:
   m_ObjectHideFlags: 0
