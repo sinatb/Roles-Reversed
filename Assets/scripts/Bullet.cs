@@ -15,7 +15,8 @@ public class Bullet : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Enemy"))
             col.gameObject.GetComponent<Troop>().RecieveDamage(damage);
-        Destroy(gameObject);
+        if (!col.gameObject.CompareTag("Bullet") && !col.gameObject.CompareTag("Player"))
+            Destroy(gameObject);
     }
 
     // Update is called once per frame
