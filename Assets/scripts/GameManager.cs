@@ -37,14 +37,14 @@ public class GameManager : MonoBehaviour
         {
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            if (_currUnit != null)
+            if (_currUnit == Triangle || _currUnit == Square || _currUnit == Hexagon)
             {
-                Instantiate(_currUnit, mainCam.ScreenToWorldPoint(Input.mousePosition),
-                    Quaternion.identity,TroopDaddy.transform);
+                Vector3 pos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+                pos.z = 0;
+                Instantiate(_currUnit, pos, Quaternion.identity,TroopDaddy.transform);
             }
         }
     }
-
     public void SelectUnit(int number)
     {
         switch (number)

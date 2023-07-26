@@ -827,7 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eee674cd81bf1942946017df5d3816a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootTime: 0.1
+  shootTime: 0.5
   bullets:
   - {fileID: 5876029912058015656, guid: a03132a32294df5478899ecd0445731b, type: 3}
   range: 5
