@@ -17,7 +17,6 @@ public class Bullet : MonoBehaviour
             col.gameObject.GetComponent<Troop>().RecieveDamage(damage);
         if (!col.gameObject.CompareTag("Bullet") && !col.gameObject.CompareTag("Player"))
         {
-            Debug.Log("sag");
             Destroy(gameObject);
         }
     }

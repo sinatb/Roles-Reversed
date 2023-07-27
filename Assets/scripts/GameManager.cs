@@ -13,18 +13,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject Hexagon;
     private GameObject _currUnit;
     private GameObject _unitPanel;
+    private GameObject _startPanel;
     private float v = 1.0f;
 
     private void Awake()
     { 
         _unitPanel = GameObject.Find("UnitSelection");
         _unitPanel.SetActive(false);
+        _startPanel = GameObject.Find("StartPanel");
     }
     public void GameStart()
     {
         state = 1;
-        var startPanel = GameObject.Find("StartPanel");
-        startPanel.SetActive(false);
+        _startPanel.SetActive(false);
     }
     private void CreateUnitPanel(float v)
     {
@@ -76,6 +77,20 @@ public class GameManager : MonoBehaviour
         else if (state == 2)
         {
             InputManagement();
+            if (!_mainEnemy.GetIsAlive())
+            {
+                state = 3;
+            }
+        }
+        else if (state == 3)
+        {
+            while (TroopDaddy.transform.childCount > 0) {
+                DestroyImmediate(TroopDaddy.transform.GetChild(0).gameObject);
+            }
+            _mainEnemy.reset();
+            _currUnit = null;
+            _unitPanel.SetActive(false);
+            _startPanel.SetActive(true);
         }
     }
 }

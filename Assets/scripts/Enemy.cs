@@ -10,20 +10,24 @@ public class Enemy : MonoBehaviour
     public float shootTime;
     public List<GameObject> bullets;
     public float range;
-    public float health;
+    public float MaxHealth;
     public float speed;
     private bool _isAlive = true;
     private bool _shoot=true;
+    private float health;
     private List<GameObject> _front;
     private List<GameObject> _right;
     private List<GameObject> _bottom;
     private List<GameObject> _left;
+    //TODO
+    //implement perks
     private void Awake()
     {
         _front = new List<GameObject>();
         _bottom = new List<GameObject>();
         _right = new List<GameObject>();
         _left = new List<GameObject>();
+        health = MaxHealth;
     }
     //A simple timer to Determine the shooting time of enemy
     IEnumerator ShootTimer()
@@ -130,12 +134,13 @@ public class Enemy : MonoBehaviour
         _shoot = false;
         StartCoroutine(ShootTimer());
     }
+    //moving behaviour
     private void Move()
     {
         var newDir = SelectMoveDirection();
         transform.Translate(newDir*(speed*Time.deltaTime));
     }
-
+    //a function to move the player to 0,0 point
     public void MoveToZero(float v)
     {
         var dir = Vector3.zero - transform.position;
@@ -146,6 +151,7 @@ public class Enemy : MonoBehaviour
     {
         return _isAlive;
     }
+    //reduces players hp the amount of damage
     public void GetDamaged(float damage)
     {
         health -= damage;
@@ -153,6 +159,12 @@ public class Enemy : MonoBehaviour
         {
             _isAlive = false;
         }
+    }
+
+    public void reset()
+    {
+        health = MaxHealth;
+        _isAlive = true;
     }
     void Update()
     {
