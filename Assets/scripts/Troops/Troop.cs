@@ -4,6 +4,7 @@ public abstract class Troop : MonoBehaviour
 {
     [SerializeField] protected float _speed;
     [SerializeField] protected float _health;
+    [SerializeField] private float _spwanTimer;
     protected GameObject target;
     [SerializeField] protected float attackTime;
     [SerializeField] protected float damage;
@@ -26,7 +27,10 @@ public abstract class Troop : MonoBehaviour
             }
         }
     }
-
+    public float GetSpawnTime()
+    {
+        return _spwanTimer;
+    }
     public void RecieveDamage(float Damage)
     {
         _health -= Damage;

@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 0.5
   _health: 40
+  _spwanTimer: 3
   attackTime: 1
   damage: 10
 --- !u!61 &-8487727544512778255

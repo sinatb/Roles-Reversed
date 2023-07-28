@@ -153,5 +153,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 0.2
   _health: 100
+  _spwanTimer: 4
   attackTime: 1
   damage: 20

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject Triangle;
     [SerializeField] private GameObject Square;
     [SerializeField] private GameObject Hexagon;
+    [SerializeField] private SpawnTimer _st;
     private GameObject _currUnit;
     private GameObject _unitPanel;
     private GameObject _startPanel;
@@ -40,9 +41,14 @@ public class GameManager : MonoBehaviour
                 return;
             if (_currUnit == Triangle || _currUnit == Square || _currUnit == Hexagon)
             {
-                Vector3 pos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-                pos.z = 0;
-                Instantiate(_currUnit, pos, Quaternion.identity,TroopDaddy.transform);
+                var c = _st.SelChar(_currUnit);
+                if (_st.CanSpawn(c))
+                {
+                    Vector3 pos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+                    pos.z = 0;
+                    Instantiate(_currUnit, pos, Quaternion.identity, TroopDaddy.transform);
+                    _st.SetTimer(c);
+                }
             }
         }
     }
@@ -89,6 +95,7 @@ public class GameManager : MonoBehaviour
             }
             _mainEnemy.reset();
             _currUnit = null;
+            unitPanelAlpha.alpha = 0;
             _unitPanel.SetActive(false);
             _startPanel.SetActive(true);
         }

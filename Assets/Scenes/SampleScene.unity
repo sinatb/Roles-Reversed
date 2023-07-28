@@ -831,7 +831,7 @@ MonoBehaviour:
   bullets:
   - {fileID: 5876029912058015656, guid: a03132a32294df5478899ecd0445731b, type: 3}
   range: 5
-  health: 100
+  MaxHealth: 100
   speed: 0.2
 --- !u!212 &1171167642
 SpriteRenderer:
