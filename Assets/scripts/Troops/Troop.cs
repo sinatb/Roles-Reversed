@@ -21,6 +21,7 @@ public abstract class Troop : MonoBehaviour
         {
             if (canAttack)
             {
+                GameManager.xp += damage/2;
                 col.gameObject.GetComponent<Enemy>().GetDamaged(damage);
                 canAttack = false;
                 StartCoroutine(AttackTimer());

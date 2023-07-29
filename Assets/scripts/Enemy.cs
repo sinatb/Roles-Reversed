@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     public float range;
     public float MaxHealth;
     public float speed;
+    public GameObject BulletDaddy;
     private bool _isAlive = true;
     private bool _shoot=true;
     private float health;
@@ -128,7 +129,8 @@ public class Enemy : MonoBehaviour
         {
             var enemy = enemies[Random.Range(0, enemies.Count)];
             var dir = Vector3.Normalize(enemy.transform.position - transform.position);
-            var g = Instantiate(b, transform.position + dir, quaternion.identity);
+            var g = Instantiate(b, transform.position + dir,
+                quaternion.identity,BulletDaddy.transform);
             g.GetComponent<Bullet>().SetTarget(dir);
         }
         _shoot = false;

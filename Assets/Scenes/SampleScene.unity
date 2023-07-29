@@ -1754,6 +1754,7 @@ MonoBehaviour:
   range: 5
   MaxHealth: 100
   speed: 0.2
+  BulletDaddy: {fileID: 1219783832}
 --- !u!212 &1171167642
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1993,6 +1994,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1219783832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1219783833}
+  m_Layer: 0
+  m_Name: BulletDaddy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1219783833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219783832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1237047659
 GameObject:
   m_ObjectHideFlags: 0
@@ -2315,7 +2347,7 @@ MonoBehaviour:
   Square: {fileID: 5009192461770831012, guid: 9e1d58220f6fbc0419e3694a1bf297b9, type: 3}
   Hexagon: {fileID: 8179653561806833481, guid: 909bd8cbc2b451b4f9ccfa5f9420cba7, type: 3}
   _st: {fileID: 547699079}
-  passiveXp: 0.1
+  passiveXp: 0.5
   xpSlider: {fileID: 822014338}
   levelText: {fileID: 868926406}
 --- !u!4 &1386134605

@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private GameObject _startPanel;
     private float v = 1.0f;
     private int level = 1;
-    private float xp = 0.0f;
+    public static float xp = 0.0f;
     private float timer = 0.0f;
     
     private void CalculatePassiveXp()
@@ -100,9 +100,9 @@ public class GameManager : MonoBehaviour
         {
             InputManagement();
             CalculatePassiveXp();
-            xpSlider.value = xp/(level*10);
+            xpSlider.value = xp/(level*100);
             levelText.text = level.ToString();
-            if (xp / (level * 10) >= 1)
+            if (xp / (level * 100) >= 1)
             {
                 xp = 0;
                 level++;
@@ -116,6 +116,9 @@ public class GameManager : MonoBehaviour
         {
             while (TroopDaddy.transform.childCount > 0) {
                 DestroyImmediate(TroopDaddy.transform.GetChild(0).gameObject);
+            }
+            while (_mainEnemy.BulletDaddy.transform.childCount > 0) {
+                DestroyImmediate(_mainEnemy.BulletDaddy.transform.GetChild(0).gameObject);
             }
             level = 1;
             xp = 0;
