@@ -1,5 +1,7 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,11 +14,26 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject Square;
     [SerializeField] private GameObject Hexagon;
     [SerializeField] private SpawnTimer _st;
+    [SerializeField] private float passiveXp;
+    [SerializeField] private Slider xpSlider;
+    [SerializeField] private TextMeshProUGUI levelText;
     private GameObject _currUnit;
     private GameObject _unitPanel;
     private GameObject _startPanel;
     private float v = 1.0f;
-
+    private int level = 1;
+    private float xp = 0.0f;
+    private float timer = 0.0f;
+    
+    private void CalculatePassiveXp()
+    {
+        timer += 0.4f*Time.deltaTime;
+        if (timer > 0.1f)
+        {
+            xp += passiveXp;
+            timer = 0;
+        }
+    }
     private void Awake()
     { 
         _unitPanel = GameObject.Find("UnitSelection");
@@ -67,7 +84,6 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    // Update is called once per frame
     void Update()
     {
         if (state == 1)
@@ -83,6 +99,14 @@ public class GameManager : MonoBehaviour
         else if (state == 2)
         {
             InputManagement();
+            CalculatePassiveXp();
+            xpSlider.value = xp/(level*10);
+            levelText.text = level.ToString();
+            if (xp / (level * 10) >= 1)
+            {
+                xp = 0;
+                level++;
+            }
             if (!_mainEnemy.GetIsAlive())
             {
                 state = 3;
@@ -93,6 +117,8 @@ public class GameManager : MonoBehaviour
             while (TroopDaddy.transform.childCount > 0) {
                 DestroyImmediate(TroopDaddy.transform.GetChild(0).gameObject);
             }
+            level = 1;
+            xp = 0;
             _mainEnemy.reset();
             _currUnit = null;
             unitPanelAlpha.alpha = 0;
@@ -100,4 +126,5 @@ public class GameManager : MonoBehaviour
             _startPanel.SetActive(true);
         }
     }
+    
 }
