@@ -10,7 +10,6 @@ public class Bullet : MonoBehaviour
     {
         this.targetDir = Vector3.Normalize(targetDir);
     }
-
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Enemy"))
@@ -20,8 +19,6 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(targetDir*(speed*Time.deltaTime));

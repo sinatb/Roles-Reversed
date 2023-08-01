@@ -84,6 +84,17 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
+    private void LevelUp()
+    {
+        var tp1 = PerkManager.GetInstance().GetTroopPerk();
+        var tp2 = PerkManager.GetInstance().GetTroopPerk();
+        
+        var ep1 = PerkManager.GetInstance().GetEnemyPerk();
+        var ep2 = PerkManager.GetInstance().GetEnemyPerk();
+        
+        
+    }
     void Update()
     {
         if (state == 1)
@@ -106,6 +117,7 @@ public class GameManager : MonoBehaviour
             {
                 xp = 0;
                 level++;
+                LevelUp();
             }
             if (!_mainEnemy.GetIsAlive())
             {
