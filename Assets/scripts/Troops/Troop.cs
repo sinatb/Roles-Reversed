@@ -40,7 +40,10 @@ public abstract class Troop : MonoBehaviour
     {
         target = GameObject.FindWithTag("Player");
         if (_health <= 0)
+        {
+            GameManager.xp += _health / 10;
             Destroy(gameObject);
+        }
         Move();
     }
 }
